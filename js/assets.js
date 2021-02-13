@@ -17,34 +17,28 @@ const assetsToLoadURLs = {
 
     //musique --> buffer: true (pour les streamer)
     //effet sonore --> buffer et loop : true 
-    /*plop: {
+   
+    musique: {
       url:
-        "https://mainline.i3s.unice.fr/mooc/SkywardBound/assets/sounds/plop.mp3",
-      buffer: false,
+        "assets/audios/musique.wav",
+      buffer: true,
+      loop: true,
+      volume: 0.5,
+    },
+    coins: {
+      url:
+        "assets/audios/coins.wav",
+      buffer: true,
       loop: false,
       volume: 1.0,
     },
-    humbug: {
-      url:
-        "https://mainline.i3s.unice.fr/mooc/SkywardBound/assets/sounds/humbug.mp3",
-      buffer: true,
-      loop: true,
-      volume: 1.0,
-    },*/
-    concertino: {
-      url:
-        "https://mainline.i3s.unice.fr/mooc/SkywardBound/assets/sounds/christmas_concertino.mp3",
-      buffer: true,
-      loop: true,
-      volume: 1.0,
-    },
     
-    xmas: {
+    fire: {
       url:
-        "https://mainline.i3s.unice.fr/mooc/SkywardBound/assets/sounds/xmas.mp3",
+        "assets/audios/fire.wav",
       buffer: true,
-      loop: true,
-      volume: 0.6,
+      loop: false,
+      volume: 1.5,
     },
   };
   

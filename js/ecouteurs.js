@@ -11,6 +11,7 @@ function traiteMouseDown(event){
             etatJeu="jeuEnCours";
             break;
         case "gameOver":
+            
             etatJeu="menuPrincipal";
 
         break;

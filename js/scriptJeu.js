@@ -32,6 +32,7 @@ let niveauCourantInit =0;
 let niveauCourant =0 ;
 let scoreCourantInit = 0;
 let scoreCourant =0;
+let afficherScore=0;
 let meilleurScore=0;
 
 //tailles des éléments
@@ -41,11 +42,15 @@ let minLFeu= 70;
 let maxLFeuInit=100;
 let maxLFeu=100;
 
-let vXFeuInit= -5 + Math.random() * 10;
-let vXFeu= -5 + Math.random() * 10;
+let vXFeuInitmin= -5;
+let vXFeumin= -5;
+let vXFeuInitmax= 5 ;
+let vXFeumax=5 ;
 
-let vYFeuInit= -5 + Math.random() * 10;
-let vYFeu= -5 + Math.random() * 10;
+let vYFeuInitmin= -4 ;
+let vYFeumin= -4 ;
+let vYFeuInitmax= 4 ;
+let vYFeumax= 4 ;
 
 //TRESOR
 let minLTresorInit=100;
@@ -62,6 +67,10 @@ let vYTresor= -5 + Math.random() * 10;
 let spanNiveau ;
 let spanScore ;
 let spanMeilleurScore;
+let spanAfficherNiveaux;
+
+
+let un_mute ;
 
 let musiqueCourante;
 
@@ -80,6 +89,10 @@ function startGame(assetsLoaded){
   spanNiveau = document.querySelector("#Niveau");
   spanScore = document.querySelector("#score");
   spanMeilleurScore = document.querySelector("#meilleurS"); 
+
+  spanAfficherNiveaux = document.querySelector("#Niveaux"); 
+  un_mute = document.getElementById("un-mute");
+  
   // pour dessiner, on a besoin de son "contexte graphique", un objet qui
   // va permettre de dessiner, ou de changer les propriétés du canvas
   // (largeur du trait, couleur, repère, etc.)
@@ -126,6 +139,12 @@ function startGame(assetsLoaded){
   creerBoulesDeFeuMenu(15);
   creerOrMenu(15);
 
+  assets.musique.play();
+
+
+
+  
+  un_mute.onclick=muteOrNot;
 
 
   requestAnimationFrame(animationLoop);
@@ -226,8 +245,8 @@ function creerBoulesDeFeu(nb) {
 
       let h = getRandomArbitrary(minLFeu,maxLFeu);
 
-      let vX = vXFeu;
-      let vY = vYFeu;
+      let vX = getRandomArbitrary(vXFeumin,vXFeumax);
+      let vY = getRandomArbitrary(vYFeumin,vYFeumax);
 
       let b = new BoulesDeFeu(x, y, h, h, vX, vY, assets.bouleFeu);
         
@@ -435,10 +454,11 @@ function animationLoop() {
 
 //MENU PRINCIPAL
 function afficheMenuPrincipal() {
-
-  //changeMusique(assets.xmas);
   ctx.save();
   //ctx.translate(0, 100);
+  pasAfficherNiveau();
+  
+  un_mute.onclick=muteOrNot;
 
   ctx.fillStyle = "purple";
   ctx.fillRect(0, 0, canvas.width+5, canvas.height+5);  
@@ -493,7 +513,10 @@ function afficheMenuPrincipal() {
 //JEU
 function updateJeu() {
 
+  afficherNiveau();
   
+  un_mute.onclick=muteOrNot;
+
   monstre.draw(ctx);
 
   dessinerLesObjets();
@@ -518,6 +541,10 @@ function afficheEcranChangementNiveau(){
 
   //changeMusique(assets.concertino);
   ctx.save();
+  pasAfficherNiveau();
+  
+  un_mute.onclick=muteOrNot;
+
   ctx.fillStyle = "purple";
   ctx.fillRect(0, 0, canvas.width, canvas.height);  
 
@@ -542,21 +569,31 @@ function afficheEcranChangementNiveau(){
 function afficherEcranGameOver(){
 
   ctx.save();
+  pasAfficherNiveau();
+  
+  un_mute.onclick=muteOrNot;
 
-  ctx.drawImage(assets.explosion, 300,300);
   ctx.fillStyle = "black";
-  ctx.font = "60px Calibri";
+  ctx.fillRect(0, 0, canvas.width+5, canvas.height+5);  
+
+  //ctx.drawImage(assets.explosion, 300,300);
+  ctx.fillStyle = "white";
+  ctx.font = "100px Calibri";
 
   // .. set color, lineWidth, shadow etc.
   // 10, 10 is the start of the baseline, bottom of left leg of the "H" in the
   // "Hello World" example.
-  ctx.fillText("GAME OVER", 100, 100);
-  // Or
-  ctx.fillStyle="red";
-  ctx.strokeText("GAME OVER", 100, 300);
+  ctx.fillText("GAME OVER", 100, 300);
+   // Or
+   
+  ctx.font = "40px Calibri";
+
+  ctx.fillText("Mon score : " + afficherScore, 100, 400);
+ 
 
 
   
+
 
   ctx.restore();
 
@@ -570,6 +607,7 @@ function drawGIF(){
   ctx.save();
   
 }
+
 
 
 //----------------------------------------//
@@ -591,8 +629,10 @@ function niveauAzero(){
   minLTresor= minLTresorInit;
   maxLTresor=maxLTresorInit;
 
-  vXFeu=vXFeuInit;
-  vYFeu=vYFeuInit;
+  vXFeumin=vXFeuInitmin;
+  vXFeumax=vXFeuInitmax;
+  vYFeumin=vYFeuInitmin;
+  vYFeumax=vYFeuInitmax;
 
   vXTresor=vXTresorInit;
   vYTresor=vYTresorInit;
@@ -613,14 +653,18 @@ function augmenteNiveau(){
   nbBouleFeu=nbBouleFeu + 1;
   nbTresor=nbTresor+1;
 
-  minLFeu=minLFeu +5;
-  maxLFeu=maxLFeu +5;
+  minLFeu=minLFeu +10;
+  maxLFeu=maxLFeu +10;
 
   minLTresor= minLTresor -5;
   maxLTresor=maxLTresor -5;
 
-  vXFeu=vXFeu*1.2;
-  vYFeu=vYFeu*1.2;
+  vXFeumin=vXFeumin*1.15;
+  vXFeumax=vXFeumax*1.15;
+
+  vYFeumin=vYFeumin*1.15;
+  vYFeumax=vYFeumax*1.15;
+
 
   vXTresor=vXTresor*1.1;
   vYTresor=vYTresor*1.1;
@@ -654,8 +698,28 @@ function NiveauFini() {
 }
 
 
+function afficherNiveau(){
+  spanAfficherNiveaux.style.visibility='visible';
+}
+
+function pasAfficherNiveau(){
+  spanAfficherNiveaux.style.visibility='hidden';
+}
 
 
+
+function muteOrNot(){
+
+  if(!assets.musique){
+    assets.musique.play();
+  }
+  
+  else{
+    assets.musique.stop();
+  }
+  
+  
+};
 
 
 //MEILLEUR SCORE

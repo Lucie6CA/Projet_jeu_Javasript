@@ -117,6 +117,8 @@ function traiteCollisionBalleAvecJoueur(b) {
   //console.log("PAS COLLISION....");
 }
 
+
+
 //Collision objets bords
 function testCollisionsObjetsAvecBords(b) {
   if (b.x > canvas.width - b.l) {
@@ -152,7 +154,8 @@ function traiteCollisionsMonstreAvecBoulesFeu(b){
       
       gameOver = true;
       console.log(gameOver);
-    
+      changeMusique(assets.fire);
+      
       //assets.humbug.play();
       etatJeu="gameOver";
 
@@ -160,25 +163,31 @@ function traiteCollisionsMonstreAvecBoulesFeu(b){
 }
 function traiteCollisionsMonstreAvecTresor(b){
   if (circRectsOverlap(b.x, b.y, b.l, b.h, monstre.x, monstre.y, monstre.radius)) {
-      let index = tableauTresor.indexOf(b);
-      tableauTresor.splice(index, 1);
-      
-      scoreCourant++;
-      spanScore.innerHTML = scoreCourant;
-      //faire une fonction qui détecte si c'est la dernière verte ou pas
+    let index = tableauTresor.indexOf(b);
+    tableauTresor.splice(index, 1);
 
-      //gérer le meilleur score
-      //meilleur score
-      if (meilleurScore<scoreCourant){
-        meilleurScore = scoreCourant;
-        localStorage.hiscore = meilleurScore;
-        spanMeilleurScore.innerHTML = meilleurScore;
-      }
-      
-      if (NiveauFini()) {
-        console.log("niveau fini")
-        etatJeu = "ecranChangementNiveau";
-      }
+    assets.coins.play();    
+
+    scoreCourant++;
+    spanScore.innerHTML = scoreCourant;
+    afficherScore=scoreCourant;
+    //faire une fonction qui détecte si c'est la dernière verte ou pas
+
+    //gérer le meilleur score
+    //meilleur score
+    
+
+    if (meilleurScore<scoreCourant){
+      meilleurScore = scoreCourant;
+      localStorage.hiscore = meilleurScore;
+      spanMeilleurScore.innerHTML = meilleurScore;
+
+    }
+    
+    if (NiveauFini()) {
+      console.log("niveau fini")
+      etatJeu = "ecranChangementNiveau";
+    }
   }
 
       
