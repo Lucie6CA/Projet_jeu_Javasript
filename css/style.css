@@ -1,0 +1,112 @@
+@font-face{
+    font-family: "MysticalSnow";
+    src: url("../assets/fonts/MysticalSnow.ttf")
+}
+
+@font-face{
+    font-family: "PineappleGrass";
+    src: url("../assets/fonts/PineappleGrass.ttf")
+}
+
+
+
+h1{
+    color:black;
+    border:2px solid black;
+    background-color: purple;
+    font-family: "PineappleGrass";
+    text-align: center;
+    font-size:30px;
+    
+}
+
+
+#myCanvas{
+
+    border: 2px solid black;
+    background-image: url("../assets/images/fondChateau.jpg");
+    visibility: visible;
+
+
+}
+
+
+#myCanvas2{
+
+    border: 2px solid black;
+    background-color:violet;
+    visibility: hidden;
+
+
+}
+
+#score{
+
+    font-size: 45px;
+    font-family: "PineappleGrass";
+    padding-left: 10px;
+
+}
+#scoreJeu{
+    font-size: 45px;
+    font-family: "PineappleGrass";
+    margin-left: 30px;
+    padding-top: 10px;
+
+}
+
+
+/*menuPrincipal*/
+
+#jeu{
+    font-size: 65px;
+    font-family: "PineappleGrass";
+    text-align: center;
+}
+#titre{
+    font-size: 45px;
+    font-family: "PineappleGrass";
+    text-align: center;
+
+}
+#clique{
+    font-size: 30px;
+    font-family: "PineappleGrass";
+    text-align: center;
+
+}
+
+#niveaux{
+    font-size: 35px;
+    color: white;
+    font-family: "PineappleGrass";
+    position: absolute;
+    left:30px;
+    top:30px;
+    user-select: none;
+}
+
+#meilleurScore{
+    display: flex;
+
+    
+    justify-content: flex-end;
+    font-size: 45px;
+    font-family: "PineappleGrass";
+    margin-right: 30px;
+    padding-top: 10px;
+
+}
+
+#infosJeu{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+
+}
+#meilleurS{
+    padding-left: 10px;
+
+}
+
