@@ -40,6 +40,13 @@ const assetsToLoadURLs = {
       loop: false,
       volume: 1.5,
     },
+    niveau: {
+      url:
+        "assets/audios/success.wav",
+      buffer: true,
+      loop: false,
+      volume: 1.5,
+    },
   };
   
   function loadAssets(callback) {

@@ -69,10 +69,14 @@ let spanScore ;
 let spanMeilleurScore;
 let spanAfficherNiveaux;
 
-
+//MUSIQUE
 let un_mute ;
 
 let musiqueCourante;
+let playmusique=0;
+let playGameOver=0;
+let playNiveau=0;
+let muteMusique=0;
 
 // programme principal
 function main() {
@@ -139,7 +143,7 @@ function startGame(assetsLoaded){
   creerBoulesDeFeuMenu(15);
   creerOrMenu(15);
 
-  assets.musique.play();
+  //assets.musique.play();
 
 
 
@@ -460,6 +464,23 @@ function afficheMenuPrincipal() {
   
   un_mute.onclick=muteOrNot;
 
+  //musique
+  if (playmusique===0){
+
+    assets.musique.play();
+
+    playmusique=1;
+  }
+  
+  if (playGameOver===1){
+    playGameOver=0;
+  }
+
+  if(playNiveau===1){
+    playNiveau=0;
+  }
+
+
   ctx.fillStyle = "purple";
   ctx.fillRect(0, 0, canvas.width+5, canvas.height+5);  
 
@@ -513,6 +534,15 @@ function afficheMenuPrincipal() {
 //JEU
 function updateJeu() {
 
+  if (playmusique===0){
+    assets.musique.play(); 
+    playmusique=1;
+  }
+
+  if(playNiveau===1){
+    playNiveau=0;
+  }
+  //si musiue=1, tu arretes la musique home et tu met =0
   afficherNiveau();
   
   un_mute.onclick=muteOrNot;
@@ -539,7 +569,20 @@ function updateJeu() {
 
 function afficheEcranChangementNiveau(){
 
-  //changeMusique(assets.concertino);
+  //Musique
+  if (playNiveau===0){
+    assets.niveau.play();
+    playNiveau=1;
+  }
+  
+  if(playmusique===1){
+    assets.musique.stop();
+    playmusique=0;
+  }
+
+
+
+
   ctx.save();
   pasAfficherNiveau();
   
@@ -567,6 +610,18 @@ function afficheEcranChangementNiveau(){
 }
 
 function afficherEcranGameOver(){
+
+  //Musique
+  if (playGameOver===0){
+    assets.fire.play();
+    playGameOver=1;
+  }
+  
+  if(playmusique===1){
+    assets.musique.stop();
+    playmusique=0;
+  }
+
 
   ctx.save();
   pasAfficherNiveau();
@@ -710,12 +765,13 @@ function pasAfficherNiveau(){
 
 function muteOrNot(){
 
-  if(!assets.musique){
-    assets.musique.play();
+  if(muteMusique===0){
+    assets.musique.stop();
+    muteMusique=1;
   }
   
   else{
-    assets.musique.stop();
+    assets.musique.play();
   }
   
   
